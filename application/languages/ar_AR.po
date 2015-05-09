@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ahmed Eldesouky <aheldesoky@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+msgid "Please Sign In"
+msgstr "من فضلك سجل الدخول"
+
+msgid "Username"
+msgstr "أدخل أسم المستخدم"
+
+msgid "Password"
+msgstr "أدخل كلمة المرور"
+
+msgid "Remember Me"
+msgstr "تذكرنى"
+
+msgid "Login"
+msgstr "دخول"
+
+msgid "Logout"
+msgstr "تسجيل خروج"
+
+msgid "Payments"
+msgstr "أقساط"
+
+msgid "Company"
+msgstr "شركة"
+
+msgid "External"
+msgstr "خارجية"
+
+msgid "Clients"
+msgstr "عملاء"
+
+msgid "Statements"
+msgstr "بيانات"
+
+msgid "iCount"
+msgstr "عصام حافظ"
+
+msgid "Add New Group"
+msgstr "إضافة مجموعة جديدة"
+
+msgid "Group Name"
+msgstr "إسم المجموعة"
+
+msgid "Add Group"
+msgstr "أضف المجموعة"
+
+msgid "Groups List"
+msgstr "قائمة المجموعات"
+
+msgid "Name"
+msgstr "الإسم"
+
+msgid "Actions"
+msgstr "إجراءات"
+
+msgid "Add New Client"
+msgstr "إضافة عميل جديد"
+
+msgid "Page Number"
+msgstr "رقم الصفحة"
+
+msgid "Group"
+msgstr "المجموعة"
+
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+msgid "Work"
+msgstr "جهة العمل"
+
+msgid "Notes"
+msgstr "ملاحظات"
+
+msgid "Balance"
+msgstr "الرصيد"
+
+msgid "Add Client"
+msgstr "أضف العميل"
+
+msgid "Clients List"
+msgstr "قائمة العملاء"
+
+msgid "Display Clients"
+msgstr "عرض العملاء"
+
+msgid "Display Groups"
+msgstr "عرض المجموعات"
+
+msgid "Edit Group"
+msgstr "تعديل المجموعة"
+
+msgid "Edit Client"
+msgstr "تعديل بيانات العميل"
+
+msgid "Groups"
+msgstr "مجموعات"
+
+msgid "There is no clients"
+msgstr "لا يوجد عملاء"
+
+msgid "There is no statements yet"
+msgstr "لا توجد تعاملات حتي الآن"
+
+msgid "There is no payments yet"
+msgstr "لا توجد أقساط حتي الآن"
+
+msgid "Info"
+msgstr "بيانات"
+
+msgid "Account"
+msgstr "مشتريات"
+
+msgid "New Statement"
+msgstr "بيان جديد"
+
+msgid "Add New Statement"
+msgstr "إضافة بيان جديد"
+
+msgid "Add Statement"
+msgstr "أضف البيان"
+
+msgid "Back"
+msgstr "الرجوع"
+
+msgid "Back to Client"
+msgstr "الرجوع للعميل"
+
+msgid "Statement"
+msgstr "البيان"
+
+msgid "Price"
+msgstr "السعر"
+
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "Make Payment"
+msgstr "تسديد قسط"
+
+msgid "View Account"
+msgstr "عرض الحساب"
+
+msgid "Find Client"
+msgstr "البحث عن عميل"
+
+msgid "Reports"
+msgstr "تقارير"
+
+msgid "Make New Payment"
+msgstr "تسديد قسط جديد"
+
+msgid "Payment Amount"
+msgstr "قيمة القسط"
+
+msgid "Payment Date"
+msgstr "تاريخ تسديد القسط"
+
+msgid "Add Payment"
+msgstr "إضافة القسط"

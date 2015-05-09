@@ -1,0 +1,90 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <?php echo $this->group['groupName'] ?>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div  class="panel-scroll">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <?php if(count($this->clients)) {?>
+                    <?php foreach ($this->clients as $client) {?>
+                
+                        <div class="panel panel-client">
+                            <div class="panel-heading" role="tab" id="heading-<?php echo $client['clientId'] ?>">
+                                <h4 class="panel-title">
+                                    <a  class="btn btn-default"
+                                        data-toggle="collapse" 
+                                        data-parent="#accordion" 
+                                        href="#client-<?php echo $client['clientId'] ?>" 
+                                        aria-expanded="true" 
+                                        aria-controls="client-<?php echo $client['clientId'] ?>">
+                                        
+                                        <?php echo $client['clientName'] ?> 
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="client-<?php echo $client['clientId'] ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $client['clientId'] ?>">
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="">
+                                                <strong><?php echo $this->translate('Page Number') ?>: </strong>
+                                                <?php echo $client['clientPageNumber'] ?>
+                                            </div>
+                                            <div class="">
+                                                <strong><?php echo $this->translate('Group') ?>: </strong>
+                                                <?php echo $this->group['groupName'] ?>
+                                            </div>
+                                            <div class="">
+                                                <strong><?php echo $this->translate('Work') ?>: </strong>
+                                                <?php echo $client['clientWork'] ?>
+                                            </div>
+                                            <div class="">
+                                                <strong><?php echo $this->translate('Phone Number') ?>: </strong>
+                                                <?php echo $client['clientPhone'] ?>
+                                            </div>
+                                            <div class="">
+                                                <strong><?php echo $this->translate('Notes') ?>: </strong>
+                                                <?php echo $client['clientNotes'] ?>
+                                            </div>
+                                            <div class="">
+                                                <strong><?php echo $this->translate('Balance') ?>: </strong>
+                                            </div>
+                                            <div class="center-block">
+                                                <h1>
+                                                    <span class="label label-danger">
+                                                        <?php echo $client['clientBalance'] ?>
+                                                    </span>
+                                                </h1>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="<?php echo $this->baseUrl() . '/client/edit/id/' . $client['clientId'] ?>" class="btn btn-warning">
+                                                <?php echo $this->translate('Edit Client') ?>
+                                            </a>
+                                            <a href="<?php echo $this->baseUrl() . '/client/view/id/' . $client['clientId'] ?>#payments" class="btn btn-primary">
+                                                <?php echo $this->translate('View Account') ?>
+                                            </a>
+                                            <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $client['clientId'] ?>" class="btn btn-success">
+                                                <?php echo $this->translate('Add New Statement') ?>
+                                            </a>
+                                            <a href="<?php echo $this->baseUrl() .  '/payment/add/clientId/' . $client['clientId'] ?>" class="btn btn-info">
+                                                <?php echo $this->translate('Make Payment') ?>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <?php }?>
+                <?php } else { ?>
+                    <div>
+                        <p style="text-align: center"><?php echo $this->translate('There is no clients') ?></p>
+                    </div>
+                <?php }?>
+            </div>
+        </div>
+    </div>
+</div>
