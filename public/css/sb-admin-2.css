@@ -215,6 +215,10 @@ input, textarea{
     margin-top: 25%;
 }
 
+.login-panel .panel-title{
+    font-size: 0.9em;
+}
+
 .flot-chart {
     display: block;
     height: 400px;
@@ -362,8 +366,18 @@ table.dataTable thead .sorting:after {
     font-size: 1.5em;
     text-align: center;
 }
+.panel-info-client .panel-title{
+    font-size: 1.2em;
+}
 .panel-client{
     font-size: 0.7em;
+}
+.panel-client .panel-heading{
+    padding: 0;
+}
+.panel-client .btn{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .btn{
     font-size: 1em;
@@ -373,15 +387,41 @@ table.dataTable thead .sorting:after {
     margin-top: 15px;
     width: 100%;
 }
+.btn-client{
+    font-size: 0.8em;
+    margin-top: 0;
+    text-align: right;
+}
+.btn-client span{
+    margin-top: 0;
+    float: left;
+}
+.btn-client-heading{
+    font-size: 1.1em;
+}
 .center-block{
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    text-align: center;
+    font-size: 0.9em;
+}
+.center-block .label{
+    width: 50%;
+    font-size: 0.9em;
+    padding: 0.2em 0.6em 0.1em;
+    top: 3px;
 }
 .navbar-collapse {
     max-height: 500px;
 }
 .nav-tabs>li>a{
     font-size: 0.9em;
+}
+div.checkbox label{
+    font-size: 0.8em;
+}
+div.checkbox input[name="remember"]{
+    width: auto;
+    margin-top: 14px;
+    margin-left: 5px;
 }

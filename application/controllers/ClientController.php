@@ -117,6 +117,9 @@ class ClientController extends Zend_Controller_Action
         $clientModel = new Application_Model_Client();
         $this->view->clients = $clientModel->getClientsByGroupId($groupId);
         
+        //$statementModel = new Application_Model_Statement();
+        
+        
         $this->render('index');
     }
 

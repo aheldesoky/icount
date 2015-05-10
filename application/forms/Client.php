@@ -42,7 +42,7 @@ class Application_Form_Client extends Zend_Form
         
         $this->addElement('textarea','clientNotes', array(
             'label' => $this->getTranslator()->translate('Notes'),
-            'required' => true,
+            'required' => false,
             'cols' => 25,
             'rows' => 4,
         ));

@@ -1,0 +1,65 @@
+<div class="panel panel-info panel-info-client">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?php echo $this->client['clientName'] ?></h3>
+    </div>
+    <div class="panel-body">
+        
+        <div role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#full-statement" aria-controls="info" role="tab" data-toggle="tab">
+                        <?php echo $this->translate('Info') ?>
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="full-statement">
+                    <div id="accountPanel" class="panel-scroll">
+                        <ul class="list-group">
+                            <?php if(count($this->statements)) {?>
+                                <?php foreach ($this->statements as $statement){?>
+                                <li class="list-group-item">
+                                    <a>
+                                    <div class="">
+                                        <?php echo $statement['statementDescription'] ?>
+                                    </div>
+                                    <div class="">
+                                        <?php echo $statement['statementPrice'] ?>
+                                    </div>
+                                    <div class="">
+                                        <?php echo $statement['statementDate'] ?>
+                                    </div>
+                                    </a>
+                                </li>
+                                <?php }?>
+                            <?php } else {?>
+                                <li class="list-group-item">
+                                    <div class="">
+                                        <?php echo $this->translate('There is no statements yet') ?>
+                                    </div>
+                                </li>
+                            <?php }?>
+                        </ul>
+                    </div>
+                    <div class="margin-20">
+                        <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-success">
+                            <?php echo $this->translate('Add New Statement') ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="panel-footer">
+            <div class="margin-20">
+                <a href="<?php echo $this->baseUrl() .  '/client/group/id/' . $this->client['clientGroup'] ?>" class="btn btn-default">
+                    <?php echo $this->translate('Back') ?>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</div>

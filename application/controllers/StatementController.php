@@ -29,8 +29,19 @@ class StatementController extends Zend_Controller_Action
                 $statementModel = new Application_Model_Statement();
                 $data['statementClient'] = $clientId;
                 $statementModel->addStatement($data);
+                
+                //For the first payment
+                if($data['statementPaid'] > 0){
+                    $payment['paymentClient'] = $clientId;
+                    $payment['paymentAmount'] = $data['statementPaid'];
+                    $payment['paymentDate'] = $data['statementDate'];
+                    $paymentModel = new Application_Model_Payment();
+                    $paymentModel->addPayment($payment);
+                }
+                
+                $balance = $client['clientBalance']+$data['statementPrice']-$data['statementPaid'];
                 $clientModel->update(
-                        array('clientBalance' => $client['clientBalance']+$data['statementPrice']), 
+                        array('clientBalance' => $balance), 
                         "clientId=$clientId"
                 );
                 $this->redirect("/client/view/id/$clientId");
@@ -45,8 +56,14 @@ class StatementController extends Zend_Controller_Action
         
     }
 
+    public function viewAction()
+    {
+        $clientId = $this->getRequest()->getParam('clientId');
+        $clientModel = new Application_Model_Client();
+        $client = $clientModel->fetchRow("clientId=$clientId")->toArray();
+        
+        
+        $this->view->client = $client;
+    }
 
 }
-
-
-

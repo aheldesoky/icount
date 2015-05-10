@@ -1,4 +1,4 @@
-<div class="panel panel-info">
+<div class="panel panel-info panel-info-client">
     <div class="panel-heading">
         <h3 class="panel-title"><?php echo $this->client['clientName'] ?></h3>
     </div>
@@ -155,6 +155,13 @@
                     </div>
                 </div>
                 
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="margin-20">
+                <a href="<?php echo $this->baseUrl() .  '/client/group/id/' . $this->client['clientGroup'] ?>" class="btn btn-default">
+                    <?php echo $this->translate('Back') ?>
+                </a>
             </div>
         </div>
         

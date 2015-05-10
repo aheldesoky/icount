@@ -140,7 +140,7 @@ msgid "Statement"
 msgstr "البيان"
 
 msgid "Price"
-msgstr "السعر"
+msgstr "الثمن"
 
 msgid "Date"
 msgstr "التاريخ"
@@ -168,3 +168,21 @@ msgstr "تاريخ تسديد القسط"
 
 msgid "Add Payment"
 msgstr "إضافة القسط"
+
+msgid "Paid"
+msgstr "المدفوع"
+
+msgid "Remaining"
+msgstr "المتبقي"
+
+msgid "Client Name"
+msgstr "إسم العميل"
+
+msgid "Client"
+msgstr "العميل"
+
+msgid "Goods"
+msgstr "البضاعة"
+
+msgid "Statement Details"
+msgstr "بيان مفصل"
