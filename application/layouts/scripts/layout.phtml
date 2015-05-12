@@ -34,13 +34,13 @@
                                     <?php foreach ($this->navGroups as $group) { ?>
                                     <li>
                                         <a href="<?php echo $this->baseUrl().'/client/group/id/'.$group['groupId'] ?>">
-                                            <i class="fa fa-star fa-fw"></i><?php echo $group['groupName'] ?>
+                                            <i class="fa fa-star-o fa-fw"></i><?php echo $group['groupName'] ?>
                                         </a>
                                     </li>
                                     <?php } ?>
                                     <li>
                                         <a href="<?php echo $this->baseUrl().'/client/add' ?>">
-                                            <i class="fa fa-plus-circle fa-fw"></i><?php echo $this->translate('Add New Client') ?>
+                                            <i class="fa fa-plus-square-o fa-fw"></i><?php echo $this->translate('Add New Client') ?>
                                         </a>
                                     </li>
                                     <li>
@@ -59,10 +59,14 @@
                                 </a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="<?php echo $this->baseUrl().'/group' ?>"><?php echo $this->translate('Display Groups') ?></a>
+                                        <a href="<?php echo $this->baseUrl().'/group' ?>">
+                                            <i class="fa fa-list fa-fw"></i><?php echo $this->translate('Display Groups') ?>
+                                        </a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo $this->baseUrl().'/group/add' ?>"><?php echo $this->translate('Add New Group') ?></a>
+                                        <a href="<?php echo $this->baseUrl().'/group/add' ?>">
+                                            <i class="fa fa-plus-square-o fa-fw"></i><?php echo $this->translate('Add New Group') ?>
+                                        </a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

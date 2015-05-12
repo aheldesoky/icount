@@ -49,7 +49,7 @@ class Application_Form_Client extends Zend_Form
         
         $this->addElement('text','clientBalance', array(
             'label' => $this->getTranslator()->translate('Balance'),
-            'required' => true,
+            'required' => false,
         ));
         
         $this->addElement('submit','submit',array(

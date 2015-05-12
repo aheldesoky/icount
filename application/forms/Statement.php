@@ -34,19 +34,18 @@ class Application_Form_Statement extends Zend_Form
         
         $this->addElement('text','statementPaid', array(
             'label' => $this->getTranslator()->translate('Paid'),
-            'value' => 0,
-            'required' => true,
+            //'required' => true,
             'validators' => array(
                 array('Digits', false, array(
                         'messages' => array(
                             'notDigits' => "Invalid entry, ex. 10.00",
                             'digitsStringEmpty' => "",
                     ))),
-                array('notEmpty', true, array(
+                /*array('notEmpty', true, array(
                         'messages' => array(
                             'isEmpty' => 'Debit_amount can\'t be empty'
                         )
-                )),
+                )),*/
 
             ),
         ));

@@ -29,10 +29,10 @@ class PaymentController extends Zend_Controller_Action
                 $paymentModel = new Application_Model_Payment();
                 $data['paymentClient'] = $clientId;
                 $paymentModel->addPayment($data);
-                $clientModel->update(
+                /*$clientModel->update(
                         array('clientBalance' => $client['clientBalance']-$data['paymentAmount']), 
                         "clientId=$clientId"
-                );
+                );*/
                 $this->redirect("/client/view/id/$clientId");
             } else {
                 $paymentForm->populate($data);

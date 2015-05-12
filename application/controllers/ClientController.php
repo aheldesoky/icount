@@ -27,19 +27,17 @@ class ClientController extends Zend_Controller_Action
         $client = $clientModel->fetchRow("clientId=$clientId")->toArray();
         
         $statementModel = new Application_Model_Statement();
-        $statements = $statementModel->getClientStatements($clientId);
+        $fullStatement = $statementModel->getFullStatement($clientId);
         
-        $paymentModel = new Application_Model_Payment();
-        $payments = $paymentModel->getClientPayments($clientId);
+        
         
         $groupId = $client['clientGroup'];
         $groupModel = new Application_Model_Group();
         $group = $groupModel->fetchRow("groupId=$groupId")->toArray();
         
         $this->view->client = $client;
-        $this->view->statements = $statements;
-        $this->view->payments = $payments;
         $this->view->group = $group;
+        $this->view->fullStatement = $fullStatement;
     }
 
     public function addAction()
@@ -69,7 +67,7 @@ class ClientController extends Zend_Controller_Action
         $client = $clientModel->fetchRow("clientId=$clientId")->toArray();
         
         $clientForm = new Application_Form_Client();
-        //$clientForm->getElement('submit')->setAttrib('label', $translate->translate('Edit Client'));
+        $clientForm->getElement('clientBalance')->setAttrib('disabled', 'disabled');
         
         $translate = Zend_Registry::get('Zend_Translate');
         $clientForm->addElement('submit','submit',array(
@@ -117,8 +115,7 @@ class ClientController extends Zend_Controller_Action
         $clientModel = new Application_Model_Client();
         $this->view->clients = $clientModel->getClientsByGroupId($groupId);
         
-        //$statementModel = new Application_Model_Statement();
-        
+        //echo '<pre>';print_r($this->view->clients);die;
         
         $this->render('index');
     }

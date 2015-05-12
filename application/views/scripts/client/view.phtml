@@ -6,156 +6,30 @@
         
         <div role="tabpanel">
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs client-tabs" role="tablist">
                 <li role="presentation" class="active">
+                    <a href="#full-statement" aria-controls="full-statement" role="tab" data-toggle="tab">
+                        <?php echo $this->translate('Page') ?>
+                        <span class="badge"><?php echo $this->client['clientPageNumber'] ?></span>
+                    </a>
+                </li>
+                <li role="presentation" class="">
                     <a href="#info" aria-controls="info" role="tab" data-toggle="tab">
                         <?php echo $this->translate('Info') ?>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#account" aria-controls="account" role="tab" data-toggle="tab">
-                        <?php echo $this->translate('Account') ?>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#payments" aria-controls="payments" role="tab" data-toggle="tab">
-                        <?php echo $this->translate('Payments') ?>
                     </a>
                 </li>
             </ul>
             
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="info">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="">
-                                <strong><?php echo $this->translate('Page Number') ?>: </strong>
-                            </div>
-                            <div class="">
-                                <?php echo $this->client['clientPageNumber'] ?>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="">
-                                <strong><?php echo $this->translate('Group') ?>: </strong>
-                            </div>
-                            <div class="">
-                                <?php echo $this->group['groupName'] ?>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="">
-                                <strong><?php echo $this->translate('Work') ?>: </strong>
-                            </div>
-                            <div class="">
-                                <?php echo $this->client['clientWork'] ?>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="">
-                                <strong><?php echo $this->translate('Phone Number') ?>: </strong>
-                            </div>
-                            <div class="">
-                                <?php echo $this->client['clientPhone'] ?>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="">
-                                <strong><?php echo $this->translate('Notes') ?>: </strong>
-                            </div>
-                            <div class="">
-                                <?php echo $this->client['clientNotes'] ?>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="">
-                                <strong><?php echo $this->translate('Balance') ?>: </strong>
-                            </div>
-                            <div class="center-block">
-                                <h1>
-                                    <span class="label label-danger">
-                                        <?php echo $this->client['clientBalance'] ?>
-                                    </span>
-                                </h1>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="<?php echo $this->baseUrl() . '/client/edit/id/' . $this->client['clientId'] ?>" class="btn btn-warning col-xs-offset-3">
-                                <?php echo $this->translate('Edit Client') ?>
-                            </a>
-                        </li>
-                    </ul>
+                <div role="tabpanel" class="tab-pane active" id="full-statement">
+                    <?php echo $this->partial('statement/view.phtml', array('client'=>$this->client, 'fullStatement'=>$this->fullStatement)); ?>
                 </div>
-                
-                <div role="tabpanel" class="tab-pane" id="account">
-                    <div id="accountPanel" class="panel-scroll">
-                        <ul class="list-group">
-                            <?php if(count($this->statements)) {?>
-                                <?php foreach ($this->statements as $statement){?>
-                                <li class="list-group-item">
-                                    <a>
-                                    <div class="">
-                                        <?php echo $statement['statementDescription'] ?>
-                                    </div>
-                                    <div class="">
-                                        <?php echo $statement['statementPrice'] ?>
-                                    </div>
-                                    <div class="">
-                                        <?php echo $statement['statementDate'] ?>
-                                    </div>
-                                    </a>
-                                </li>
-                                <?php }?>
-                            <?php } else {?>
-                                <li class="list-group-item">
-                                    <div class="">
-                                        <?php echo $this->translate('There is no statements yet') ?>
-                                    </div>
-                                </li>
-                            <?php }?>
-                        </ul>
-                    </div>
-                    <div class="margin-20">
-                        <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-success">
-                            <?php echo $this->translate('Add New Statement') ?>
-                        </a>
-                    </div>
+                <div role="tabpanel" class="tab-pane" id="info">
+                    <?php echo $this->partial('client/info.phtml', array('client'=>$this->client, 'group'=>$this->group)); ?>
                 </div>
-                
-                <div role="tabpanel" class="tab-pane" id="payments">
-                    <div id="paymentsPanel" class="panel-scroll">
-                        <ul class="list-group">
-                            <?php if(count($this->payments)) {?>
-                                <?php foreach ($this->payments as $payment){?>
-                                <li class="list-group-item">
-                                    <a>
-                                    <div class="">
-                                        <?php echo $payment['paymentAmount'] ?>
-                                    </div>
-                                    <div class="">
-                                        <?php echo $payment['paymentDate'] ?>
-                                    </div>
-                                    </a>
-                                </li>
-                                <?php }?>
-                            <?php } else {?>
-                                <li class="list-group-item">
-                                    <div class="">
-                                        <?php echo $this->translate('There is no payments yet') ?>
-                                    </div>
-                                </li>
-                            <?php }?>
-                        </ul>
-                    </div>
-                    <div class="margin-20">
-                        <a href="<?php echo $this->baseUrl() .  '/payment/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-info">
-                            <?php echo $this->translate('Make New Payment') ?>
-                        </a>
-                    </div>
-                </div>
-                
             </div>
+            
         </div>
         <div class="panel-footer">
             <div class="margin-20">

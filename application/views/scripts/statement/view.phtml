@@ -1,65 +1,70 @@
-<div class="panel panel-info panel-info-client">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?php echo $this->client['clientName'] ?></h3>
-    </div>
-    <div class="panel-body">
-        
-        <div role="tabpanel">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#full-statement" aria-controls="info" role="tab" data-toggle="tab">
-                        <?php echo $this->translate('Info') ?>
-                    </a>
+<div id="accountPanel" class="panel-scroll">
+    <!--<ul class="list-group">
+        <li class="list-group-item list-group-item-info">
+            <div class="">
+                <strong><?php echo $this->translate('Page Number') ?>: </strong>
+                <?php echo $this->client['clientPageNumber'] ?>
+            </div>
+        </li>
+    </ul>-->
+    <table class="table table-bordered table-statement">
+        <thead>
+            <tr>
+                <th><?php echo $this->translate('Statement') ?></th>
+                <th><?php echo $this->translate('Price') ?></th>
+                <th><?php echo $this->translate('Paid') ?></th>
+                <th><?php echo $this->translate('Remaining') ?></th>
+                <th><?php echo $this->translate('Date') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if($this->client){?>
+            <tr>
+                <td colspan="3"><?php echo $this->translate('Initial Balance') ?></td>
+                <td><?php echo $this->client['clientBalance'] ?></td>
+                <td></td>
+            </tr>
+            <?php }?>
+            <?php if(count($this->fullStatement)) {
+                    $totalGoods = $this->client['clientBalance'];
+                    $totalPaid = 0;
+                    $remaining = 0;
+            ?>
+                <?php foreach ($this->fullStatement as $statement){
+                    $totalGoods += $statement['statementPrice'];
+                    $totalPaid += $statement['statementPaid'];
+                    $remaining += $statement['statementPrice'] - $statement['statementPaid'];
+                ?>
+                <tr>
+                    <td><?php echo ($statement['statementDescription'])? $statement['statementDescription'] : '-' ?></td>
+                    <td><?php echo ($statement['statementPrice'])? $statement['statementPrice'] : '-' ?></td>
+                    <td><?php echo ($statement['statementPaid'])? $statement['statementPaid'] : '-' ?></td>
+                    <td><?php echo $this->client['clientBalance'] + $remaining ?></td>
+                    <td><?php echo date_format(new DateTime($statement['statementDate']), 'm/d') ?></td>
+                </tr>
+                <?php }?>
+                <tr class="success">
+                    <th><?php echo $this->translate('') ?></th>
+                    <th><?php echo $totalGoods ?></th>
+                    <th><?php echo $totalPaid ?></th>
+                    <th><?php echo $this->client['clientBalance'] + $remaining ?></th>
+                    <th></th>
+                </tr>
+            <?php } else {?>
+                <li class="list-group-item">
+                    <div class="">
+                        <?php echo $this->translate('There is no statements yet') ?>
+                    </div>
                 </li>
-            </ul>
-            
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="full-statement">
-                    <div id="accountPanel" class="panel-scroll">
-                        <ul class="list-group">
-                            <?php if(count($this->statements)) {?>
-                                <?php foreach ($this->statements as $statement){?>
-                                <li class="list-group-item">
-                                    <a>
-                                    <div class="">
-                                        <?php echo $statement['statementDescription'] ?>
-                                    </div>
-                                    <div class="">
-                                        <?php echo $statement['statementPrice'] ?>
-                                    </div>
-                                    <div class="">
-                                        <?php echo $statement['statementDate'] ?>
-                                    </div>
-                                    </a>
-                                </li>
-                                <?php }?>
-                            <?php } else {?>
-                                <li class="list-group-item">
-                                    <div class="">
-                                        <?php echo $this->translate('There is no statements yet') ?>
-                                    </div>
-                                </li>
-                            <?php }?>
-                        </ul>
-                    </div>
-                    <div class="margin-20">
-                        <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-success">
-                            <?php echo $this->translate('Add New Statement') ?>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        <div class="panel-footer">
-            <div class="margin-20">
-                <a href="<?php echo $this->baseUrl() .  '/client/group/id/' . $this->client['clientGroup'] ?>" class="btn btn-default">
-                    <?php echo $this->translate('Back') ?>
-                </a>
-            </div>
-        </div>
-        
-    </div>
+            <?php }?>
+        </tbody>
+    </table>
+</div>
+<div class="margin-20">
+    <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-success">
+        <?php echo $this->translate('Add New Statement') ?>
+    </a>
+    <a href="<?php echo $this->baseUrl() .  '/payment/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-info">
+        <?php echo $this->translate('Make Payment') ?>
+    </a>
 </div>

@@ -1,0 +1,59 @@
+<ul class="list-group">
+    <li class="list-group-item">
+        <div class="">
+            <strong><?php echo $this->translate('Page Number') ?>: </strong>
+        </div>
+        <div class="">
+            <?php echo $this->client['clientPageNumber'] ?>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="">
+            <strong><?php echo $this->translate('Group') ?>: </strong>
+        </div>
+        <div class="">
+            <?php echo $this->group['groupName'] ?>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="">
+            <strong><?php echo $this->translate('Work') ?>: </strong>
+        </div>
+        <div class="">
+            <?php echo $this->client['clientWork'] ?>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="">
+            <strong><?php echo $this->translate('Phone Number') ?>: </strong>
+        </div>
+        <div class="">
+            <?php echo $this->client['clientPhone'] ?>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="">
+            <strong><?php echo $this->translate('Notes') ?>: </strong>
+        </div>
+        <div class="">
+            <?php echo $this->client['clientNotes'] ?>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="">
+            <strong><?php echo $this->translate('Initial Balance') ?>: </strong>
+        </div>
+        <div class="center-block">
+            <h1>
+                <span class="label label-danger">
+                    <?php echo $this->client['clientBalance'] ?>
+                </span>
+            </h1>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <a href="<?php echo $this->baseUrl() . '/client/edit/id/' . $this->client['clientId'] ?>" class="btn btn-warning col-xs-offset-3">
+            <?php echo $this->translate('Edit Client') ?>
+        </a>
+    </li>
+</ul>

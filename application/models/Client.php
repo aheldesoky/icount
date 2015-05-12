@@ -26,7 +26,9 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         $joinStatement = $this->select()->setIntegrityCheck(false);
     	$joinStatement->from(array('c' => 'client'));
     	$joinStatement->joinLeft(   array('s' => 'statement'), 'c.clientId = s.statementClient', 
-                            array('clientGoods' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPrice IS NOT NULL THEN s.statementPrice ELSE 0 END)'))
+                            array('clientGoods' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPrice IS NOT NULL THEN s.statementPrice ELSE 0 END)'), 
+                                  'clientPaid' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPaid IS NOT NULL THEN s.statementPaid ELSE 0 END)')
+                            )
                 );
         $joinStatement->where("c.clientGroup=$groupId");
         $joinStatement->group('c.clientId', 'p.paymentId');
@@ -49,7 +51,7 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         $i = -1;
         foreach ($resultJoinStatement as &$client){
             $i++;
-            $client['clientPaid'] = $resultJoinPayment[$i]['clientPaid'];
+            $client['clientPaid'] += $resultJoinPayment[$i]['clientPaid'];
         }
         //echo '<pre>';print_r($resultJoinStatement);die;
         

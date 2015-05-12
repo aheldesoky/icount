@@ -425,3 +425,18 @@ div.checkbox input[name="remember"]{
     margin-top: 14px;
     margin-left: 5px;
 }
+.table-statement{
+    font-size: 0.4em;
+    text-align: center;
+}
+.table-statement th{
+    text-align: center;
+}
+.client-tabs>li{
+    width: 50%;
+}
+.client-tabs>li a{
+    font-size: 0.68em;
+    width: 100%;
+    text-align: center;
+}

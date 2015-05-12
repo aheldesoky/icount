@@ -85,6 +85,9 @@ msgstr "ملاحظات"
 msgid "Balance"
 msgstr "الرصيد"
 
+msgid "Initial Balance"
+msgstr "الرصيد الإبتدائي"
+
 msgid "Add Client"
 msgstr "أضف العميل"
 
@@ -116,7 +119,7 @@ msgid "There is no payments yet"
 msgstr "لا توجد أقساط حتي الآن"
 
 msgid "Info"
-msgstr "بيانات"
+msgstr "البيانات الشخصية"
 
 msgid "Account"
 msgstr "مشتريات"
@@ -137,7 +140,7 @@ msgid "Back to Client"
 msgstr "الرجوع للعميل"
 
 msgid "Statement"
-msgstr "البيان"
+msgstr "بيان"
 
 msgid "Price"
 msgstr "الثمن"
@@ -186,3 +189,6 @@ msgstr "البضاعة"
 
 msgid "Statement Details"
 msgstr "بيان مفصل"
+
+msgid "Page"
+msgstr "صفحة"
