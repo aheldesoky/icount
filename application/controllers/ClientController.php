@@ -120,16 +120,24 @@ class ClientController extends Zend_Controller_Action
         $this->render('index');
     }
 
+    public function searchAction()
+    {
+        $clientSearchForm = new Application_Form_Search();
+        
+        if($this->getRequest()->isPost()){
+            
+            $data = $this->getRequest()->getPost();
+            $clientSearchForm->populate($data);
+            
+            $clientModel = new Application_Model_Client();
+            
+            $translate = Zend_Registry::get('Zend_Translate');
+            $this->view->panelTitle = $translate->translate('Search Result');
+            $this->view->clients = $clientModel->getClientsByName($data['clientName']);
+            $this->render('index');
+        }
+        
+        $this->view->form = $clientSearchForm;
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-

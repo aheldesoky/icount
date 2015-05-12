@@ -192,3 +192,12 @@ msgstr "بيان مفصل"
 
 msgid "Page"
 msgstr "صفحة"
+
+msgid "Search for Client"
+msgstr "ابحث عن عميل"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Search Result"
+msgstr "نتائج البحث"

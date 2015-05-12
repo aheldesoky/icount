@@ -59,6 +59,45 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         //return $this->fetchAll("clientGroup=$groupId", "clientPageNumber ASC");
     }
     
+    public function getClientsByName($clientName)
+    {
+        $joinStatement = $this->select()->setIntegrityCheck(false);
+    	$joinStatement->from(array('c' => 'client'));
+    	$joinStatement->joinLeft(   array('s' => 'statement'), 'c.clientId = s.statementClient', 
+                            array('clientGoods' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPrice IS NOT NULL THEN s.statementPrice ELSE 0 END)'), 
+                                  'clientPaid' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPaid IS NOT NULL THEN s.statementPaid ELSE 0 END)')
+                            )
+                );
+        $joinStatement->where("c.clientName LIKE '%$clientName%'");
+        $joinStatement->group('c.clientId', 'p.paymentId');
+    	$joinStatement->order('c.clientPageNumber ASC');
+    	$resultJoinStatement = $this->fetchAll($joinStatement)->toArray();
+        //echo '<pre>';print_r($resultJoinStatement);die;
+        
+        
+        $joinPayment = $this->select()->setIntegrityCheck(false);
+    	$joinPayment->from(array('c' => 'client'), array());
+        $joinPayment->joinLeft( array('p' => 'payment'), 'c.clientId = p.paymentClient', 
+                           array('clientPaid'=>new Zend_Db_Expr('SUM(CASE WHEN p.paymentAmount IS NOT NULL THEN p.paymentAmount ELSE 0 END)'))
+                );
+        $joinPayment->where("c.clientName LIKE '%$clientName%'");
+        $joinPayment->group('c.clientId', 'p.paymentId');
+    	$joinPayment->order('c.clientPageNumber ASC');
+    	$resultJoinPayment = $this->fetchAll($joinPayment)->toArray();
+        //echo '<pre>';print_r($resultJoinPayment);die;
+        
+        $i = -1;
+        foreach ($resultJoinStatement as &$client){
+            $i++;
+            $client['clientPaid'] += $resultJoinPayment[$i]['clientPaid'];
+        }
+        //echo '<pre>';print_r($resultJoinStatement);die;
+        
+    	return $resultJoinStatement;
+        //return $this->fetchAll("clientGroup=$groupId", "clientPageNumber ASC");
+    }
+    
+    
     public function deleteClient($clientId)
     {
         return $this->delete("clientId=$clientId");
