@@ -126,14 +126,14 @@ class ClientController extends Zend_Controller_Action
         
         if($this->getRequest()->isPost()){
             
-            $data = $this->getRequest()->getPost();
-            $clientSearchForm->populate($data);
+            $filter = $this->getRequest()->getPost();
+            $clientSearchForm->populate($filter);
             
             $clientModel = new Application_Model_Client();
             
             $translate = Zend_Registry::get('Zend_Translate');
             $this->view->panelTitle = $translate->translate('Search Result');
-            $this->view->clients = $clientModel->getClientsByName($data['clientName']);
+            $this->view->clients = $clientModel->getClientsByFilter($filter);
             $this->render('index');
         }
         

@@ -11,22 +11,28 @@ class Application_Form_Payment extends Zend_Form
             'label' => $this->getTranslator()->translate('Payment Amount'),
             'required' => true,
             'validators' => array(
-                array('Digits', false, array(
-                        'messages' => array(
-                            'notDigits' => "Invalid entry, ex. 10.00",
-                            'digitsStringEmpty' => "",
-                    ))),
                 array('notEmpty', true, array(
                         'messages' => array(
-                            'isEmpty' => 'Debit_amount can\'t be empty'
+                            'isEmpty' => $this->getTranslator()->translate('Value is required')
                         )
                 )),
-
-            ),
+                array('Digits', false, array(
+                        'messages' => array(
+                            'notDigits' => $this->getTranslator()->translate('Digits only allowed'),
+                            'digitsStringEmpty' => $this->getTranslator()->translate('Digits only allowed')
+                )))
+            )
         ));
         
-        $this->addElement('text','paymentDate', array(
+        $this->addElement('text','paymentDateView', array(
             'label' => $this->getTranslator()->translate('Payment Date'),
+            'value' => date('Y-m-d'),
+            'required' => false,
+            'disabled' => 'disabled'
+        ));
+        
+        $this->addElement('hidden','paymentDate', array(
+            'value' => date('Y-m-d'),
             'required' => true,
         ));
         

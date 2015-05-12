@@ -119,7 +119,7 @@ msgid "There is no payments yet"
 msgstr "لا توجد أقساط حتي الآن"
 
 msgid "Info"
-msgstr "البيانات الشخصية"
+msgstr "بيانات العميل"
 
 msgid "Account"
 msgstr "مشتريات"
@@ -185,7 +185,7 @@ msgid "Client"
 msgstr "العميل"
 
 msgid "Goods"
-msgstr "البضاعة"
+msgstr "بضاعة"
 
 msgid "Statement Details"
 msgstr "بيان مفصل"
@@ -201,3 +201,18 @@ msgstr "بحث"
 
 msgid "Search Result"
 msgstr "نتائج البحث"
+
+msgid "Any Group"
+msgstr "أى مجموعة"
+
+msgid "Search Again"
+msgstr "إعادة البحث"
+
+msgid "Digits only allowed"
+msgstr "مسموح بأرقام فقط"
+
+msgid "Value is required"
+msgstr "يجب إدخال قيمة"
+
+msgid "This page is assigned to another client"
+msgstr "هذه الصفحة مخصصة لعميل آخر"

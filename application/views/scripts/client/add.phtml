@@ -6,3 +6,9 @@
         <?php echo $this->form ?>
     </div>
 </div>
+<script>
+    $(function() {
+        var value = $( "#clientGroup" ).val();
+        $( "#statementDateView" ).val(value);
+    });
+</script>

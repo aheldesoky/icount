@@ -21,6 +21,38 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         return $this->fetchAll()->toArray();
     }
     
+    public function getClientById($clientId)
+    {
+        $joinStatement = $this->select()->setIntegrityCheck(false);
+    	$joinStatement->from(array('c' => 'client'));
+    	$joinStatement->joinLeft(   array('s' => 'statement'), 'c.clientId = s.statementClient', 
+                            array('clientGoods' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPrice IS NOT NULL THEN s.statementPrice ELSE 0 END)'), 
+                                  'clientPaid' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPaid IS NOT NULL THEN s.statementPaid ELSE 0 END)')
+                            )
+                );
+        $joinStatement->where("c.clientId=$clientId");
+        $joinStatement->group('c.clientId', 'p.paymentId');
+    	$resultJoinStatement = $this->fetchRow($joinStatement)->toArray();
+        //echo '<pre>';print_r($resultJoinStatement);die;
+        
+        
+        $joinPayment = $this->select()->setIntegrityCheck(false);
+    	$joinPayment->from(array('c' => 'client'), array());
+        $joinPayment->joinLeft( array('p' => 'payment'), 'c.clientId = p.paymentClient', 
+                           array('clientPaid'=>new Zend_Db_Expr('SUM(CASE WHEN p.paymentAmount IS NOT NULL THEN p.paymentAmount ELSE 0 END)'))
+                );
+        $joinPayment->where("c.clientId=$clientId");
+        $joinPayment->group('c.clientId', 'p.paymentId');
+    	$resultJoinPayment = $this->fetchRow($joinPayment)->toArray();
+        //echo '<pre>';print_r($resultJoinPayment);die;
+        
+        $resultJoinStatement['clientPaid'] += $resultJoinPayment['clientPaid'];
+        //echo '<pre>';print_r($resultJoinStatement);die;
+        
+    	return $resultJoinStatement;
+        //return $this->fetchAll("clientGroup=$groupId", "clientPageNumber ASC");
+    }
+    
     public function getClientsByGroupId($groupId)
     {
         $joinStatement = $this->select()->setIntegrityCheck(false);
@@ -59,7 +91,7 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         //return $this->fetchAll("clientGroup=$groupId", "clientPageNumber ASC");
     }
     
-    public function getClientsByName($clientName)
+    public function getClientsByFilter($filter)
     {
         $joinStatement = $this->select()->setIntegrityCheck(false);
     	$joinStatement->from(array('c' => 'client'));
@@ -68,7 +100,9 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
                                   'clientPaid' => new Zend_Db_Expr('SUM(CASE WHEN s.statementPaid IS NOT NULL THEN s.statementPaid ELSE 0 END)')
                             )
                 );
-        $joinStatement->where("c.clientName LIKE '%$clientName%'");
+        $joinStatement->where("c.clientName LIKE '%${filter['clientName']}%'");
+        if($filter['clientGroup'])
+            $joinStatement->where ("c.clientGroup={$filter['clientGroup']}");
         $joinStatement->group('c.clientId', 'p.paymentId');
     	$joinStatement->order('c.clientPageNumber ASC');
     	$resultJoinStatement = $this->fetchAll($joinStatement)->toArray();
@@ -80,7 +114,9 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         $joinPayment->joinLeft( array('p' => 'payment'), 'c.clientId = p.paymentClient', 
                            array('clientPaid'=>new Zend_Db_Expr('SUM(CASE WHEN p.paymentAmount IS NOT NULL THEN p.paymentAmount ELSE 0 END)'))
                 );
-        $joinPayment->where("c.clientName LIKE '%$clientName%'");
+        $joinPayment->where("c.clientName LIKE '%${filter['clientName']}%'");
+        if($filter['clientGroup'])
+            $joinStatement->where ("c.clientGroup={$filter['clientGroup']}");
         $joinPayment->group('c.clientId', 'p.paymentId');
     	$joinPayment->order('c.clientPageNumber ASC');
     	$resultJoinPayment = $this->fetchAll($joinPayment)->toArray();

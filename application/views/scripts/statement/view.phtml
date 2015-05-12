@@ -7,9 +7,9 @@
             </div>
         </li>
     </ul>-->
-    <table class="table table-bordered table-statement">
+    <table class="table table-bordered table-condensed table-statement">
         <thead>
-            <tr>
+            <tr class="active">
                 <th><?php echo $this->translate('Statement') ?></th>
                 <th><?php echo $this->translate('Price') ?></th>
                 <th><?php echo $this->translate('Paid') ?></th>
@@ -18,11 +18,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php if($this->client){?>
+            <?php if($this->client['clientBalance']){?>
             <tr>
-                <td colspan="3"><?php echo $this->translate('Initial Balance') ?></td>
+                <td><?php echo $this->translate('Goods') ?></td>
                 <td><?php echo $this->client['clientBalance'] ?></td>
-                <td></td>
+                <td>-</td>
+                <td><?php echo $this->client['clientBalance'] ?></td>
+                <td>-</td>
             </tr>
             <?php }?>
             <?php if(count($this->fullStatement)) {
@@ -35,7 +37,7 @@
                     $totalPaid += $statement['statementPaid'];
                     $remaining += $statement['statementPrice'] - $statement['statementPaid'];
                 ?>
-                <tr>
+                <tr class="<?php echo ($statement['statementDescription']) ? 'warning' : '' ?>">
                     <td><?php echo ($statement['statementDescription'])? $statement['statementDescription'] : '-' ?></td>
                     <td><?php echo ($statement['statementPrice'])? $statement['statementPrice'] : '-' ?></td>
                     <td><?php echo ($statement['statementPaid'])? $statement['statementPaid'] : '-' ?></td>
@@ -43,19 +45,17 @@
                     <td><?php echo date_format(new DateTime($statement['statementDate']), 'm/d') ?></td>
                 </tr>
                 <?php }?>
-                <tr class="success">
-                    <th><?php echo $this->translate('') ?></th>
-                    <th><?php echo $totalGoods ?></th>
-                    <th><?php echo $totalPaid ?></th>
-                    <th><?php echo $this->client['clientBalance'] + $remaining ?></th>
-                    <th></th>
+                <tr>
+                    <td><?php echo $this->translate('') ?></td>
+                    <td class="info"><strong><?php echo $totalGoods ?></strong></td>
+                    <td class="success"><strong><?php echo $totalPaid ?></strong></td>
+                    <td class="danger"><strong><?php echo $this->client['clientBalance'] + $remaining ?></strong></td>
+                    <td></td>
                 </tr>
             <?php } else {?>
-                <li class="list-group-item">
-                    <div class="">
-                        <?php echo $this->translate('There is no statements yet') ?>
-                    </div>
-                </li>
+                <tr class="">
+                    <td colspan="5"><?php echo $this->translate('There is no statements yet') ?></td>
+                </tr>
             <?php }?>
         </tbody>
     </table>

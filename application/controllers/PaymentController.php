@@ -17,7 +17,9 @@ class PaymentController extends Zend_Controller_Action
     {
         $clientId = $this->getRequest()->getParam('clientId');
         $clientModel = new Application_Model_Client();
-        $client = $clientModel->fetchRow("clientId=$clientId")->toArray();
+        //$client = $clientModel->fetchRow("clientId=$clientId")->toArray();
+        $client = $clientModel->getClientById($clientId);
+        //echo '<pre>';print_r($client);die;
         
         $paymentForm = new Application_Form_Payment();
         

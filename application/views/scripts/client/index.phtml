@@ -86,5 +86,15 @@
                 <?php }?>
             </div>
         </div>
+        
+        <?php if( isset($this->panelTitle) ){ ?>
+        <div class="panel-footer">
+            <div class="margin-20">
+                <a href="<?php echo $this->baseUrl() .  '/client/search' ?>" class="btn btn-default">
+                    <?php echo $this->translate('Search Again') ?>
+                </a>
+            </div>
+        </div>
+        <?php }?>
     </div>
 </div>

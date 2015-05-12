@@ -10,6 +10,23 @@ class Application_Form_Client extends Zend_Form
         $this->addElement('text','clientPageNumber', array(
             'label' => $this->getTranslator()->translate('Page Number'),
             'required' => true,
+            'validators' => array(
+                array('notEmpty', true, array(
+                        'messages' => array(
+                            'isEmpty' => $this->getTranslator()->translate('Value is required')
+                        )
+                )),
+                array('Digits', false, array(
+                        'messages' => array(
+                            'notDigits' => $this->getTranslator()->translate('Digits only allowed'),
+                            'digitsStringEmpty' => $this->getTranslator()->translate('Digits only allowed')
+                ))),
+                array('db_NoRecordExists', true, array(
+                        'table' => 'client', 
+                        'field' => 'clientPageNumber', 
+                        'messages' => $this->getTranslator()->translate('This page is assigned to another client')
+                ))
+            )
         ));
         
         $groupModel = new Application_Model_Group();
@@ -28,16 +45,37 @@ class Application_Form_Client extends Zend_Form
         $this->addElement('text','clientName', array(
             'label' => $this->getTranslator()->translate('Name'),
             'required' => true,
+            'validators' => array(
+                array('notEmpty', true, array(
+                        'messages' => array(
+                            'isEmpty' => $this->getTranslator()->translate('Value is required')
+                        )
+                ))
+            )
         ));
         
         $this->addElement('text','clientPhone', array(
             'label' => $this->getTranslator()->translate('Phone Number'),
-            'required' => true,
+            'required' => false,
+            'validators' => array(
+                array('Digits', false, array(
+                        'messages' => array(
+                            'notDigits' => $this->getTranslator()->translate('Digits only allowed'),
+                            'digitsStringEmpty' => $this->getTranslator()->translate('Digits only allowed')
+                )))
+            )
         ));
         
         $this->addElement('text','clientWork', array(
             'label' => $this->getTranslator()->translate('Work'),
-            'required' => true,
+            'required' => false,
+            'validators' => array(
+                array('notEmpty', true, array(
+                        'messages' => array(
+                            'isEmpty' => $this->getTranslator()->translate('Value is required')
+                        )
+                ))
+            )
         ));
         
         $this->addElement('textarea','clientNotes', array(
@@ -50,6 +88,13 @@ class Application_Form_Client extends Zend_Form
         $this->addElement('text','clientBalance', array(
             'label' => $this->getTranslator()->translate('Balance'),
             'required' => false,
+            'validators' => array(
+                array('Digits', false, array(
+                        'messages' => array(
+                            'notDigits' => $this->getTranslator()->translate('Digits only allowed'),
+                            'digitsStringEmpty' => $this->getTranslator()->translate('Digits only allowed')
+                )))
+            ),
         ));
         
         $this->addElement('submit','submit',array(

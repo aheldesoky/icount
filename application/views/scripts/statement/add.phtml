@@ -18,7 +18,7 @@
                 </div>
                 <div class="">
                     <strong><?php echo $this->translate('Balance') ?>: </strong>
-                    <?php echo $this->client['clientBalance'] ?>
+                    <?php echo $this->client['clientBalance'] + $this->client['clientGoods'] - $this->client['clientPaid'] ?>
                 </div>
             </li>
             <div>
@@ -36,18 +36,16 @@
 <script>
     $(function() {
         $.datepicker.setDefaults( $.datepicker.regional[ "ar" ] );
-        //$( "#statementDatepicker" ).datepicker( $.datepicker.regional[ "ar" ] );
+        
         $( "#statementDatepicker" ).datepicker({
             dateFormat: "yy-mm-dd",
             onSelect: function(date){
                 $( "#statementDate" ).val(date);
+                $( "#statementDateView" ).val(date);
             }
         });
+        
+        var value = $( "#statementDate" ).val();
+        $( "#statementDateView" ).val(value);
     });
 </script>
-<style>
-    .ui-datepicker{
-        width: 14em !important;
-        font-size: 0.74em;
-    }
-</style>

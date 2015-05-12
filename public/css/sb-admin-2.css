@@ -4,9 +4,12 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+
 body {
     background-color: #f8f8f8;
-    font-size: 2.5em !important;
+    font-family: 'Droid Arabic Kufi', sans-serif;
+    font-size: 2.1em !important;
 }
 
 input, textarea{
@@ -426,10 +429,11 @@ div.checkbox input[name="remember"]{
     margin-left: 5px;
 }
 .table-statement{
-    font-size: 0.4em;
+    font-size: 0.5em;
     text-align: center;
 }
 .table-statement th{
+    font-size: 0.9em;
     text-align: center;
 }
 .client-tabs>li{
@@ -439,4 +443,23 @@ div.checkbox input[name="remember"]{
     font-size: 0.68em;
     width: 100%;
     text-align: center;
+}
+.zend_form dt{
+    margin-top: 20px;
+}
+.ui-datepicker{
+    width: 100% !important;
+    font-size: 0.9em !important;
+}
+#statementDateView{
+    text-align: center;
+}
+#paymentDateView{
+    text-align: center;
+}
+#statementDate-label, #paymentDate-label{
+    display: none;
+}
+.errors{
+    color: red;
 }
