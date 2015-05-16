@@ -5,7 +5,7 @@
         </h3>
     </div>
     <div class="panel-body">
-        <div  class="panel-scroll">
+        <div  class="">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <!-- List Header -->
                         <div class="panel-client">
@@ -32,26 +32,12 @@
                                         aria-expanded="true" 
                                         aria-controls="client-<?php echo $client['clientId'] ?>">
                                         
-                                        <?php echo $client['clientName'] ?> 
+                                        <strong><?php echo $client['clientName'] ?></strong>
                                         <span><strong><?php echo $client['clientPageNumber'] ?></strong> <i class="fa fa-file-text-o"></i></span>
-                                        <div class="center-block">
-                                            <i class="fa fa-shopping-cart fa-fw"></i>
-                                            <?php echo $this->translate('Goods') ?>
-                                            <span class="label label-default">
-                                                <?php echo $client['clientGoods'] + $client['clientBalance'] ?>
-                                            </span>
-                                        </div>
-                                        <div class="center-block">
-                                            <i class="fa fa-check fa-fw"></i>
-                                            <?php echo $this->translate('Paid') ?>
-                                            <span class="label label-success">
-                                                <?php echo $client['clientPaid'] ?>
-                                            </span>
-                                        </div>
-                                        <div class="center-block">
-                                            <i class="fa fa-warning fa-fw"></i>
-                                            <?php echo $this->translate('Remaining') ?>
-                                            <span class="label label-danger">
+                                        
+                                        <div class="">
+                                            <?php echo $this->translate('Balance') ?>
+                                            <span class="label label-balance">
                                                 <?php echo $client['clientBalance'] + $client['clientGoods'] - $client['clientPaid'] ?>
                                             </span>
                                         </div>
@@ -59,21 +45,45 @@
                                 </h4>
                             </div>
                             <div id="client-<?php echo $client['clientId'] ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $client['clientId'] ?>">
-                                <div class="panel-body">
-                                    <div class="list-group-item">
-                                        <!--<a href="<?php echo $this->baseUrl() . '/client/view/id/' . $client['clientId'] ?>#payments" class="btn btn-primary">
-                                            <?php echo $this->translate('View Account') ?>
-                                        </a>-->
-                                        <a href="<?php echo $this->baseUrl() . '/client/view/id/' . $client['clientId'] ?>" class="btn btn-primary">
-                                            <?php echo $this->translate('Statement Details') ?>
+                                <div class="panel-body panel-actions">
+                                    <h4 class="panel-title">
+                                        <a  class="btn btn-client">
+                                            <div class="center-block">
+                                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                                <?php echo $this->translate('Goods') ?>
+                                                <span class="label label-info">
+                                                    <?php echo $client['clientGoods'] + $client['clientBalance'] ?>
+                                                </span>
+                                            </div>
+                                            <div class="center-block">
+                                                <i class="fa fa-check fa-fw"></i>
+                                                <?php echo $this->translate('Paid') ?>
+                                                <span class="label label-default">
+                                                    <?php echo $client['clientPaid'] ?>
+                                                </span>
+                                            </div>
+                                            <div class="center-block">
+                                                <i class="fa fa-warning fa-fw"></i>
+                                                <?php echo $this->translate('Remaining') ?>
+                                                <span class="label label-danger">
+                                                    <?php echo $client['clientBalance'] + $client['clientGoods'] - $client['clientPaid'] ?>
+                                                </span>
+                                            </div>
                                         </a>
-                                        <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $client['clientId'] ?>" class="btn btn-success">
-                                            <?php echo $this->translate('Add New Statement') ?>
-                                        </a>
-                                        <a href="<?php echo $this->baseUrl() .  '/payment/add/clientId/' . $client['clientId'] ?>" class="btn btn-info">
-                                            <?php echo $this->translate('Make Payment') ?>
-                                        </a>
-                                    </div>
+                                    </h4>
+
+                                    <a href="<?php echo $this->baseUrl() . '/client/view/id/' . $client['clientId'] ?>" class="btn btn-primary">
+                                        <?php   echo $this->translate('Statement Details'); 
+                                                //$name = explode(' ', $client['clientName']);
+                                                //echo $this->translate('Page') . ' ' . $name[0]; 
+                                        ?>
+                                    </a>
+                                    <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $client['clientId'] ?>" class="btn btn-success">
+                                        <?php echo $this->translate('Add New Statement') ?>
+                                    </a>
+                                    <a href="<?php echo $this->baseUrl() .  '/payment/add/clientId/' . $client['clientId'] ?>" class="btn btn-info">
+                                        <?php echo $this->translate('Make Payment') ?>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -87,14 +97,43 @@
             </div>
         </div>
         
-        <?php if( isset($this->panelTitle) ){ ?>
         <div class="panel-footer">
-            <div class="margin-20">
+            <div class="text-center">
+                <?php if( isset($this->panelTitle) ){ ?>
                 <a href="<?php echo $this->baseUrl() .  '/client/search' ?>" class="btn btn-default">
                     <?php echo $this->translate('Search Again') ?>
                 </a>
+                <?php } else {?>
+                <nav>
+                    <ul class="pagination pagination-sm">
+                        <?php 
+                        $totalPages = $this->totalPages;
+                        $currentPage = $this->currentPage;
+                        $prevPage = ($currentPage == 1)? $currentPage : $currentPage-1;
+                        $nextPage = ($currentPage == $totalPages)? $currentPage: $currentPage+1;
+                        ?>
+                        <li class="<?php echo ($prevPage == $currentPage)? 'disabled' : '' ?>">
+                            <a href="<?php echo ($prevPage == $currentPage)? '#' : $this->baseUrl('/client/group/id/'.$this->group['groupId'].'/page/'.$prevPage) ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <?php for( $page = 1 ; $page <= $totalPages ; $page++ ){ ?>
+                        <li class="<?php echo ($page == $currentPage)? 'active' : ''?>">
+                            <a href="<?php echo $this->baseUrl('/client/group/id/'.$this->group['groupId'].'/page/'.$page) ?>">
+                                <?php echo $page;?>
+                            </a>
+                        </li>
+                        <?php }?>
+                        <li class="<?php echo ($nextPage == $currentPage)? 'disabled' : '' ?>">
+                            <a href="<?php echo ($nextPage == $currentPage)? '#' : $this->baseUrl('/client/group/id/'.$this->group['groupId'].'/page/'.$nextPage) ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <?php }?>
             </div>
         </div>
-        <?php }?>
+        
     </div>
 </div>

@@ -5,11 +5,11 @@
     <div class="panel-body">
         <?php echo $this->form ?>
     </div>
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a href="<?php echo $this->baseUrl() . '/client/view/id/' . $this->client['clientId'] ?>" class="btn btn-warning col-xs-offset-3">
+    <div class="panel-footer">
+        <div class="">
+            <a href="<?php echo $this->baseUrl() .  '/client/view/id/' . $this->client['clientId'] ?>" class="btn btn-default">
                 <?php echo $this->translate('Back to Client') ?>
             </a>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>

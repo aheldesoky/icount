@@ -1,12 +1,11 @@
 <div id="accountPanel" class="panel-scroll">
-    <!--<ul class="list-group">
-        <li class="list-group-item list-group-item-info">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-danger">
             <div class="">
-                <strong><?php echo $this->translate('Page Number') ?>: </strong>
-                <?php echo $this->client['clientPageNumber'] ?>
+                <strong><?php echo $this->translate('Tab any statement row to edit') ?></strong>
             </div>
         </li>
-    </ul>-->
+    </ul>
     <table class="table table-bordered table-condensed table-statement">
         <thead>
             <tr class="active">
@@ -37,8 +36,9 @@
                     $totalPaid += $statement['statementPaid'];
                     $remaining += $statement['statementPrice'] - $statement['statementPaid'];
                 ?>
-                <tr class="<?php echo ($statement['statementType']=='statement') ? 'warning' : '' ?>">
-                    <td><?php echo ($statement['statementType']=='statement')? $statement['statementDescription'] : '-' ?></td>
+                <tr class="clickable-row <?php echo ($statement['statementDescription']) ? 'warning' : '' ?>" 
+                    data-href="<?php echo $this->baseUrl('/'.$statement['statementType'].'/edit/id/'.$statement['statementId']) ?>">
+                    <td><?php echo ($statement['statementDescription'])? $statement['statementDescription'] : '-' ?></td>
                     <td><?php echo ($statement['statementPrice'])? $statement['statementPrice'] : '-' ?></td>
                     <td><?php echo ($statement['statementPaid'])? $statement['statementPaid'] : '-' ?></td>
                     <td><?php echo $this->client['clientBalance'] + $remaining ?></td>
@@ -61,13 +61,15 @@
     </table>
 </div>
 <div class="margin-20">
-    <a href="<?php echo $this->baseUrl() .  '/statement/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-success">
-        <?php echo $this->translate('Add New Statement') ?>
-    </a>
-    <a href="<?php echo $this->baseUrl() .  '/payment/add/clientId/' . $this->client['clientId'] ?>" class="btn btn-info">
-        <?php echo $this->translate('Make Payment') ?>
-    </a>
-    <a href="<?php echo $this->baseUrl() .  '/client/edit-statement/id/' . $this->client['clientId'] ?>" class="btn btn-warning">
-        <?php echo $this->translate('Edit Statement') ?>
+    <a href="<?php echo $this->baseUrl() .  '/client/view/id/' . $this->client['clientId'] ?>" class="btn btn-danger">
+        <?php echo $this->translate('Cancel and Return') ?>
     </a>
 </div>
+
+<script>
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>

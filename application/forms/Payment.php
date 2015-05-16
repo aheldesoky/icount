@@ -57,7 +57,8 @@ class Application_Form_Payment extends Zend_Form
         $this->dummy->clearValidators();
         
         $this->addElement('submit','submit',array(
-            'label' => $this->getTranslator()->translate('Add Payment')
+            'label' => $this->getTranslator()->translate('Add Payment'),
+            'class' => 'btn btn-success'
         ));
     }
 

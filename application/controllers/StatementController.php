@@ -5,7 +5,11 @@ class StatementController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        //checking if user is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization->hasIdentity()) {
+            $this->redirect('/auth/login');
+        }
     }
 
     public function indexAction()
@@ -17,7 +21,6 @@ class StatementController extends Zend_Controller_Action
     {
         $clientId = $this->getRequest()->getParam('clientId');
         $clientModel = new Application_Model_Client();
-        //$client = $clientModel->fetchRow("clientId=$clientId")->toArray();
         $client = $clientModel->getClientById($clientId);
         //echo '<pre>';print_r($client);die;
         
@@ -33,26 +36,11 @@ class StatementController extends Zend_Controller_Action
                 $statementModel->addStatement($data);
                 //print_r($data);die;
                 
-                //For the first payment
-                /*if($data['statementPaid'] > 0){
-                    $payment['paymentClient'] = $clientId;
-                    $payment['paymentAmount'] = $data['statementPaid'];
-                    $payment['paymentDate'] = $data['statementDate'];
-                    $paymentModel = new Application_Model_Payment();
-                    $paymentModel->addPayment($payment);
-                }*/
-                /*
-                $balance = $client['clientBalance']+$data['statementPrice']-$data['statementPaid'];
-                $clientModel->update(
-                        array('clientBalance' => $balance), 
-                        "clientId=$clientId"
-                );*/
                 $this->redirect("/client/view/id/$clientId");
             } else {
                 $statementForm->populate($data);
             }
         }
-        
         
         $this->view->client = $client;
         $this->view->form = $statementForm;
@@ -72,4 +60,46 @@ class StatementController extends Zend_Controller_Action
         $this->view->fullStatement = $fullStatement;
     }
 
+    public function editAction()
+    {
+        $statementId = $this->getRequest()->getParam('id');
+        $statementModel = new Application_Model_Statement();
+        $statement = $statementModel->getStatementById($statementId);
+        //echo '<pre>';print_r($statement);die;
+        
+        $clientModel = new Application_Model_Client();
+        $client = $clientModel->getClientById($statement['statementClient']);
+        //echo '<pre>';print_r($client);die;
+        
+        $translate = Zend_Registry::get('Zend_Translate');
+        $statementForm = new Application_Form_Statement();
+        $statementForm->getElement('submit')
+                      ->setLabel($translate->translate('Edit Statement'))
+                      ->setAttrib('class', 'btn btn-warning');
+        
+        if($this->getRequest()->isPost()){
+            $data = $this->getRequest()->getPost();
+            unset($data['submit']);
+            
+            if($statementForm->isValid($data)){
+                $statementModel = new Application_Model_Statement();
+                $data['statementClient'] = $client['clientId'];
+                $statementModel->editStatement($statementId, $data);
+                //print_r($data);die;
+                
+                $this->redirect("/client/view/id/{$client['clientId']}");
+            } else {
+                $statementForm->populate($data);
+            }
+        } else  {
+            $statementForm->populate($statement);
+        }
+        
+        $this->view->client = $client;
+        $this->view->form = $statementForm;
+        
+    }
+
+
 }
+

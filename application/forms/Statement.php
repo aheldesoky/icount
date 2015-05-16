@@ -88,7 +88,8 @@ class Application_Form_Statement extends Zend_Form
         $this->dummy->clearValidators();
         
         $this->addElement('submit','submit',array(
-            'label' => $this->getTranslator()->translate('Add Statement')
+            'label' => $this->getTranslator()->translate('Add Statement'),
+            'class' => 'btn btn-success'
         ));
     }
 

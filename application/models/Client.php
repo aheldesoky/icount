@@ -53,7 +53,15 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         //return $this->fetchAll("clientGroup=$groupId", "clientPageNumber ASC");
     }
     
-    public function getClientsByGroupId($groupId)
+    public function countClientsByGroupId($groupId = null){
+        $select = $this->select()->from("client", array("totalClients"=>"COUNT(*)"));
+        if($groupId)
+            $select->where("clientGroup=$groupId");
+        $result = $this->fetchRow($select)->toArray();
+        return $result['totalClients'];
+    }
+    
+    public function getClientsByGroupId($groupId, $page, $clientsPerPage)
     {
         $joinStatement = $this->select()->setIntegrityCheck(false);
     	$joinStatement->from(array('c' => 'client'));
@@ -65,6 +73,7 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         $joinStatement->where("c.clientGroup=$groupId");
         $joinStatement->group('c.clientId', 'p.paymentId');
     	$joinStatement->order('c.clientPageNumber ASC');
+        $joinStatement->limitPage($page, $clientsPerPage);
     	$resultJoinStatement = $this->fetchAll($joinStatement)->toArray();
         //echo '<pre>';print_r($resultJoinStatement);die;
         
@@ -77,6 +86,7 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         $joinPayment->where("c.clientGroup=$groupId");
         $joinPayment->group('c.clientId', 'p.paymentId');
     	$joinPayment->order('c.clientPageNumber ASC');
+        $joinStatement->limitPage($page, 2);
     	$resultJoinPayment = $this->fetchAll($joinPayment)->toArray();
         //echo '<pre>';print_r($resultJoinPayment);die;
         

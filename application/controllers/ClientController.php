@@ -67,16 +67,19 @@ class ClientController extends Zend_Controller_Action
         $client = $clientModel->fetchRow("clientId=$clientId")->toArray();
         
         $clientForm = new Application_Form_Client();
-        $clientForm->getElement('clientBalance')->setAttrib('disabled', 'disabled');
+        //$clientForm->getElement('clientBalance')->setAttrib('disabled', 'disabled');
         
         $translate = Zend_Registry::get('Zend_Translate');
-        $clientForm->addElement('submit','submit',array(
-            'label' => $translate->translate('Edit Client')
-        ));
+        $clientForm->getElement('submit')
+                   ->setLabel($translate->translate('Edit Client'))
+                   ->setAttrib('class', 'btn btn-warning');
         
         if($this->getRequest()->isPost()){
             $data = $this->getRequest()->getPost();
             unset($data['submit']);
+            
+            if($data['clientPageNumber'] == $client['clientPageNumber'])
+                $clientForm->getElement('clientPageNumber')->removeValidator('db_NoRecordExists');
             
             if($clientForm->isValid($data)){
                 $clientModel = new Application_Model_Client();
@@ -107,15 +110,18 @@ class ClientController extends Zend_Controller_Action
     public function groupAction()
     {
         $groupId = $this->getRequest()->getParam('id');
+        $currentPage = $this->getRequest()->getParam('page');
+        $currentPage = ($currentPage) ? $currentPage : 1;
+        $clientsPerPage = 20;
         
         $groupModel = new Application_Model_Group();
         $this->view->group = $groupModel->fetchRow("groupId=$groupId")->toArray();
         
-        
         $clientModel = new Application_Model_Client();
-        $this->view->clients = $clientModel->getClientsByGroupId($groupId);
+        $this->view->clients = $clientModel->getClientsByGroupId($groupId, $currentPage, $clientsPerPage);
         
-        //echo '<pre>';print_r($this->view->clients);die;
+        $this->view->totalPages = ceil($clientModel->countClientsByGroupId($groupId) / $clientsPerPage);
+        $this->view->currentPage = $currentPage;
         
         $this->render('index');
     }
@@ -140,4 +146,22 @@ class ClientController extends Zend_Controller_Action
         $this->view->form = $clientSearchForm;
     }
 
+    public function editStatementAction()
+    {
+        $clientId = $this->getRequest()->getParam('id');
+        $clientModel = new Application_Model_Client();
+        $client = $clientModel->fetchRow("clientId=$clientId")->toArray();
+        
+        $statementModel = new Application_Model_Statement();
+        $fullStatement = $statementModel->getFullStatement($clientId);
+        //echo '<pre>';print_r($fullStatement);die;
+        $groupId = $client['clientGroup'];
+        $groupModel = new Application_Model_Group();
+        $group = $groupModel->fetchRow("groupId=$groupId")->toArray();
+        
+        $this->view->client = $client;
+        $this->view->group = $group;
+        $this->view->fullStatement = $fullStatement;
+        
+    }
 }

@@ -7,6 +7,29 @@ class Application_Form_Client extends Zend_Form
     {
         $this->setMethod('post');
         
+        $this->addElement('text','clientName', array(
+            'label' => $this->getTranslator()->translate('Name'),
+            'required' => true,
+            'validators' => array(
+                array('notEmpty', true, array(
+                        'messages' => array(
+                            'isEmpty' => $this->getTranslator()->translate('Value is required')
+                        )
+                ))
+            )
+        ));
+        
+        $groupModel = new Application_Model_Group();
+        $groups = array();
+        foreach ($groupModel->listGroups() as $group)
+            $groups[$group['groupId']] = $group['groupName'];
+        
+        $this->addElement('select','clientGroup', array(
+            'label' => $this->getTranslator()->translate('Group'),
+            'required' => true,
+            'multiOptions' => $groups,
+        ));
+        
         $this->addElement('text','clientPageNumber', array(
             'label' => $this->getTranslator()->translate('Page Number'),
             'required' => true,
@@ -25,31 +48,6 @@ class Application_Form_Client extends Zend_Form
                         'table' => 'client', 
                         'field' => 'clientPageNumber', 
                         'messages' => $this->getTranslator()->translate('This page is assigned to another client')
-                ))
-            )
-        ));
-        
-        $groupModel = new Application_Model_Group();
-        $groups = array();
-        foreach ($groupModel->listGroups() as $group)
-            $groups[$group['groupId']] = $group['groupName'];
-        
-        //var_dump($groups);die;
-        
-        $this->addElement('select','clientGroup', array(
-            'label' => $this->getTranslator()->translate('Group'),
-            'required' => true,
-            'multiOptions' => $groups,
-        ));
-        
-        $this->addElement('text','clientName', array(
-            'label' => $this->getTranslator()->translate('Name'),
-            'required' => true,
-            'validators' => array(
-                array('notEmpty', true, array(
-                        'messages' => array(
-                            'isEmpty' => $this->getTranslator()->translate('Value is required')
-                        )
                 ))
             )
         ));
@@ -86,7 +84,7 @@ class Application_Form_Client extends Zend_Form
         ));
         
         $this->addElement('text','clientBalance', array(
-            'label' => $this->getTranslator()->translate('Balance'),
+            'label' => $this->getTranslator()->translate('Initial Balance'),
             'required' => false,
             'validators' => array(
                 array('Digits', false, array(
@@ -98,7 +96,8 @@ class Application_Form_Client extends Zend_Form
         ));
         
         $this->addElement('submit','submit',array(
-            'label' => $this->getTranslator()->translate('Add Client')
+            'label' => $this->getTranslator()->translate('Add Client'),
+            'class' => 'btn btn-success'
         ));
     }
 

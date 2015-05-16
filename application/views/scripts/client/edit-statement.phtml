@@ -13,20 +13,12 @@
                         <span class="badge"><?php echo $this->client['clientPageNumber'] ?></span>
                     </a>
                 </li>
-                <li role="presentation" class="">
-                    <a href="#info" aria-controls="info" role="tab" data-toggle="tab">
-                        <?php echo $this->translate('Info') ?>
-                    </a>
-                </li>
             </ul>
             
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="full-statement">
-                    <?php echo $this->partial('statement/view.phtml', array('client'=>$this->client, 'fullStatement'=>$this->fullStatement)); ?>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="info">
-                    <?php echo $this->partial('client/info.phtml', array('client'=>$this->client, 'group'=>$this->group)); ?>
+                    <?php echo $this->partial('statement/editable-view.phtml', array('client'=>$this->client, 'fullStatement'=>$this->fullStatement)); ?>
                 </div>
             </div>
             

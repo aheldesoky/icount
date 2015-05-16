@@ -5,9 +5,9 @@
                        ->appendFile($this->baseUrl('/js/jquery-ui/datepicker-ar.js'));
 ?>
 
-<div class="panel panel-success">
+<div class="panel panel-warning">
     <div class="panel-heading">
-        <h3 class="panel-title"><?php echo $this->translate('Make New Payment') ?></h3>
+        <h3 class="panel-title"><?php echo $this->translate('Edit Statement') ?></h3>
     </div>
     <div class="panel-body">
         <ul class="list-group">
@@ -39,15 +39,15 @@
     $(function() {
         $.datepicker.setDefaults( $.datepicker.regional[ "ar" ] );
         
-        $( "#paymentDatepicker" ).datepicker({
+        $( "#statementDatepicker" ).datepicker({
             dateFormat: "yy-mm-dd",
             onSelect: function(date){
-                $( "#paymentDate" ).val(date);
-                $( "#paymentDateView" ).val(date);
+                $( "#statementDate" ).val(date);
+                $( "#statementDateView" ).val(date);
             }
         });
         
-        var value = $( "#paymentDate" ).val();
-        $( "#paymentDateView" ).val(value);
+        var value = $( "#statementDate" ).val();
+        $( "#statementDateView" ).val(value);
     });
 </script>

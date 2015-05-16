@@ -1,4 +1,53 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Payment</b> and script/action name <b>edit</b></p>
+<?php 
+    $this->headLink()->appendStylesheet($this->baseUrl('/css/jquery-ui/jquery-ui.css'));
+    
+    $this->headScript()->appendFile($this->baseUrl('/js/jquery-ui/jquery-ui.js'))
+                       ->appendFile($this->baseUrl('/js/jquery-ui/datepicker-ar.js'));
+?>
+
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?php echo $this->translate('Edit Payment') ?></h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info">
+                <div class="">
+                    <strong><?php echo $this->translate('Name') ?>: </strong>
+                    <?php echo $this->client['clientName'] ?>
+                </div>
+                <div class="">
+                    <strong><?php echo $this->translate('Balance') ?>: </strong>
+                    <?php echo $this->client['clientBalance'] + $this->client['clientGoods'] - $this->client['clientPaid'] ?>
+                </div>
+            </li>
+            <div>
+                <?php echo $this->form ?>
+            </div>
+        </ul>
+    </div>
+    <div class="panel-footer">
+        <div class="">
+            <a href="<?php echo $this->baseUrl() .  '/client/view/id/' . $this->client['clientId'] ?>" class="btn btn-default">
+                <?php echo $this->translate('Back to Client') ?>
+            </a>
+        </div>
+    </div>
 </div>
+
+<script>
+    $(function() {
+        $.datepicker.setDefaults( $.datepicker.regional[ "ar" ] );
+        
+        $( "#paymentDatepicker" ).datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: function(date){
+                $( "#paymentDate" ).val(date);
+                $( "#paymentDateView" ).val(date);
+            }
+        });
+        
+        var value = $( "#paymentDate" ).val();
+        $( "#paymentDateView" ).val(value);
+    });
+</script>

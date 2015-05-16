@@ -16,6 +16,11 @@ class Application_Model_Statement extends Zend_Db_Table_Abstract
         return $this->update($statement, "statementId=$statementId");
     }
     
+    public function getStatementById($statementId)
+    {
+        return $this->fetchRow("statementId=$statementId")->toArray();
+    }
+    
     public function getClientStatements($clientId)
     {
         return $this->fetchAll("statementClient=$clientId")->toArray();
@@ -34,7 +39,13 @@ class Application_Model_Statement extends Zend_Db_Table_Abstract
     public function getFullStatement($clientId)
     {
         $statements = $this->select();
-    	$statements->from(array('s' => 'statement'), array('statementDescription', 'statementPrice', 'statementPaid', 'statementDate'));
+    	$statements->from(array('s' => 'statement'), array(
+            'statementId', 
+            'statementDescription', 
+            'statementPrice', 
+            'statementPaid', 
+            'statementDate', 
+            new Zend_Db_Expr ('"statement" AS statementType') ));
         $statements->where("s.statementClient=$clientId");
     	$resultStatements = $this->fetchAll($statements)->toArray();
         //echo '<pre>';print_r($resultStatements);//die;
@@ -42,10 +53,12 @@ class Application_Model_Statement extends Zend_Db_Table_Abstract
         
         $payments = $this->select()->setIntegrityCheck(false);
     	$payments->from(array('p' => 'payment'), array(
+            'statementId' => 'paymentId',
             new Zend_Db_Expr ('"" AS statementDescription'), 
             new Zend_Db_Expr ('"0" AS statementPrice'), 
             'statementPaid' => 'paymentAmount', 
-            'statementDate' => 'paymentDate'
+            'statementDate' => 'paymentDate', 
+            new Zend_Db_Expr ('"payment" AS statementType') 
             ));
         $payments->where("p.paymentClient=$clientId");
     	$resultPayments = $this->fetchAll($payments)->toArray();

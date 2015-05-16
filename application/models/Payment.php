@@ -15,6 +15,11 @@ class Application_Model_Payment extends Zend_Db_Table_Abstract
         return $this->update($payment, "paymentId=$paymentId");
     }
     
+    public function getPaymentById($paymentId)
+    {
+        return $this->fetchRow("paymentId=$paymentId")->toArray();
+    }
+    
     public function getClientPayments($clientId)
     {
         return $this->fetchAll("paymentClient=$clientId")->toArray();

@@ -5,7 +5,11 @@ class PaymentController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        //checking if user is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization->hasIdentity()) {
+            $this->redirect('/auth/login');
+        }
     }
 
     public function indexAction()
@@ -48,7 +52,40 @@ class PaymentController extends Zend_Controller_Action
 
     public function editAction()
     {
-        // action body
+        $paymentId = $this->getRequest()->getParam('id');
+        $paymentModel = new Application_Model_Payment();
+        $payment = $paymentModel->getPaymentById($paymentId);
+        
+        $clientModel = new Application_Model_Client();
+        $client = $clientModel->getClientById($payment['paymentClient']);
+        //echo '<pre>';print_r($client);die;
+        
+        $translate = Zend_Registry::get('Zend_Translate');
+        $paymentForm = new Application_Form_Payment();
+        $paymentForm->getElement('submit')
+                    ->setLabel($translate->translate('Edit Payment'))
+                    ->setAttrib('class', 'btn btn-warning');
+        
+        if($this->getRequest()->isPost()){
+            $data = $this->getRequest()->getPost();
+            unset($data['submit']);
+            
+            if($paymentForm->isValid($data)){
+                $paymentModel = new Application_Model_Payment();
+                $data['paymentClient'] = $client['clientId'];
+                $paymentModel->editPayment($paymentId, $data);
+                
+                $this->redirect("/client/view/id/{$client['clientId']}");
+            } else {
+                $paymentForm->populate($data);
+            }
+        } else {
+            $paymentForm->populate($payment);
+        }
+        
+        
+        $this->view->client = $client;
+        $this->view->form = $paymentForm;
     }
 
     public function deleteAction()

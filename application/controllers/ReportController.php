@@ -5,7 +5,11 @@ class ReportController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        //checking if user is authenticated or not
+        $authorization = Zend_Auth::getInstance();
+        if(!$authorization->hasIdentity()) {
+            $this->redirect('/auth/login');
+        }
     }
 
     public function indexAction()

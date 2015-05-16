@@ -391,7 +391,7 @@ table.dataTable thead .sorting:after {
     width: 100%;
 }
 .btn-client{
-    font-size: 0.8em;
+    font-size: 0.7em;
     margin-top: 0;
     text-align: right;
 }
@@ -406,7 +406,7 @@ table.dataTable thead .sorting:after {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 .center-block .label{
     width: 50%;
@@ -462,4 +462,12 @@ div.checkbox input[name="remember"]{
 }
 .errors{
     color: red;
+}
+.panel-actions{
+    background: #ffefff;
+}
+.label-balance{
+    color: red;
+    font-size: 100%;
+    padding: .3em .1em 0.3em;
 }
