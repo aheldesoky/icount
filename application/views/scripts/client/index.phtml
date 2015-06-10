@@ -36,7 +36,16 @@
                                         <span><strong><?php echo $client['clientPageNumber'] ?></strong> <i class="fa fa-file-text-o"></i></span>
                                         
                                         <div class="">
-                                            <?php echo $this->translate('Balance') ?>
+                                            <?php echo $this->translate('Balance') ?> 
+                                            <?php if($client['lastPaid']){
+                                                        $date = explode('/', date_format(new DateTime($client['lastPaid']), 'm/d'));
+                                                        $date[0] = sprintf("%d", $date[0]);
+                                                        $date[1] = sprintf("%d", $date[1]);
+                                                        echo $client['lastPaid'] = implode('/', $date);
+                                                  } else {
+                                                        echo '-';
+                                                  }
+                                            ?>
                                             <span class="label label-balance">
                                                 <?php echo $client['clientBalance'] + $client['clientGoods'] - $client['clientPaid'] ?>
                                             </span>

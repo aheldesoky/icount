@@ -44,11 +44,13 @@ class Application_Form_Client extends Zend_Form
                             'notDigits' => $this->getTranslator()->translate('Digits only allowed'),
                             'digitsStringEmpty' => $this->getTranslator()->translate('Digits only allowed')
                 ))),
+                /*
                 array('db_NoRecordExists', true, array(
                         'table' => 'client', 
                         'field' => 'clientPageNumber', 
                         'messages' => $this->getTranslator()->translate('This page is assigned to another client')
                 ))
+                */
             )
         ));
         

@@ -48,6 +48,9 @@ class ClientController extends Zend_Controller_Action
             $data = $this->getRequest()->getPost();
             unset($data['submit']);
             
+            //$where = array('client', 'clientPageNumber', "clientGroup={$data['clientGroup']}");
+            //$clientForm->getElement('clientPageNumber')->addValidator('db_NoRecordExists', true, $where);
+            
             if($clientForm->isValid($data)){
                 $clientModel = new Application_Model_Client();
                 $clientModel->addClient($data);
@@ -77,6 +80,9 @@ class ClientController extends Zend_Controller_Action
         if($this->getRequest()->isPost()){
             $data = $this->getRequest()->getPost();
             unset($data['submit']);
+            
+            //$where = array('client', 'clientPageNumber', "clientGroup={$data['clientGroup']}");
+            //$clientForm->getElement('clientPageNumber')->addValidator('db_NoRecordExists', true, $where);
             
             if($data['clientPageNumber'] == $client['clientPageNumber'])
                 $clientForm->getElement('clientPageNumber')->removeValidator('db_NoRecordExists');
@@ -112,7 +118,7 @@ class ClientController extends Zend_Controller_Action
         $groupId = $this->getRequest()->getParam('id');
         $currentPage = $this->getRequest()->getParam('page');
         $currentPage = ($currentPage) ? $currentPage : 1;
-        $clientsPerPage = 20;
+        $clientsPerPage = 10;
         
         $groupModel = new Application_Model_Group();
         $this->view->group = $groupModel->fetchRow("groupId=$groupId")->toArray();

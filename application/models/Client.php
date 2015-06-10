@@ -81,7 +81,9 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         $joinPayment = $this->select()->setIntegrityCheck(false);
     	$joinPayment->from(array('c' => 'client'), array());
         $joinPayment->joinLeft( array('p' => 'payment'), 'c.clientId = p.paymentClient', 
-                           array('clientPaid'=>new Zend_Db_Expr('SUM(CASE WHEN p.paymentAmount IS NOT NULL THEN p.paymentAmount ELSE 0 END)'))
+                           array('clientPaid'=>new Zend_Db_Expr('SUM(CASE WHEN p.paymentAmount IS NOT NULL THEN p.paymentAmount ELSE 0 END)'), 
+                                 'lastPaid'=>new Zend_Db_Expr('MAX(p.paymentDate)')
+                           )
                 );
         $joinPayment->where("c.clientGroup=$groupId");
         $joinPayment->group('c.clientId', 'p.paymentId');
@@ -94,6 +96,7 @@ class Application_Model_Client extends Zend_Db_Table_Abstract
         foreach ($resultJoinStatement as &$client){
             $i++;
             $client['clientPaid'] += $resultJoinPayment[$i]['clientPaid'];
+            $client['lastPaid'] = $resultJoinPayment[$i]['lastPaid'];
         }
         //echo '<pre>';print_r($resultJoinStatement);die;
         

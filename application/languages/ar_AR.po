@@ -84,7 +84,7 @@ msgid "Notes"
 msgstr "ملاحظات"
 
 msgid "Balance"
-msgstr "الرصيد"
+msgstr "رصيد"
 
 msgid "Initial Balance"
 msgstr "الرصيد الإبتدائي"
