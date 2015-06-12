@@ -43,7 +43,11 @@
                                                         $date[1] = sprintf("%d", $date[1]);
                                                         echo $client['lastPaid'] = implode('/', $date);
                                                   } else {
-                                                        echo '-';
+                                                        $date = explode('/', date_format(new DateTime($client['clientCreationDate']), 'm/d'));
+                                                        $date[0] = sprintf("%d", $date[0]);
+                                                        $date[1] = sprintf("%d", $date[1]);
+                                                        echo $client['clientCreationDate'] = implode('/', $date);
+                                                        //echo '-';
                                                   }
                                             ?>
                                             <span class="label label-balance">
