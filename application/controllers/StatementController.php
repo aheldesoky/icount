@@ -96,8 +96,20 @@ class StatementController extends Zend_Controller_Action
         }
         
         $this->view->client = $client;
+        $this->view->statementId = $statementId;
         $this->view->form = $statementForm;
         
+    }
+
+    public function deleteAction()
+    {
+        $statementId = $this->getRequest()->getParam('id');
+        $clientId = $this->getRequest()->getParam('cid');
+        
+        $statementModel = new Application_Model_Statement();
+        $statementModel->deleteStatement($statementId);
+        
+        $this->redirect("/client/edit-statement/id/$clientId");
     }
 
 

@@ -85,13 +85,21 @@ class PaymentController extends Zend_Controller_Action
         
         
         $this->view->client = $client;
+        $this->view->paymentId = $paymentId;
         $this->view->form = $paymentForm;
     }
 
     public function deleteAction()
     {
-        // action body
+        $paymentId = $this->getRequest()->getParam('id');
+        $clientId = $this->getRequest()->getParam('cid');
+        
+        $paymentModel = new Application_Model_Payment();
+        $paymentModel->deletePayment($paymentId);
+        
+        $this->redirect("/client/edit-statement/id/$clientId");
     }
+
 
 
 }

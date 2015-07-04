@@ -28,6 +28,11 @@
     </div>
     <div class="panel-footer">
         <div class="">
+            <a href="<?php echo $this->baseUrl() .  '/statement/delete/id/' . $this->statementId . '/cid/' . $this->client['clientId'] ?>" class="btn btn-danger">
+                <?php echo $this->translate('Delete Statement') ?>
+            </a>
+        </div>
+        <div class="">
             <a href="<?php echo $this->baseUrl() .  '/client/view/id/' . $this->client['clientId'] ?>" class="btn btn-default">
                 <?php echo $this->translate('Back to Client') ?>
             </a>
